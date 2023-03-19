@@ -6,11 +6,12 @@ from datetime import timedelta
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 class Config:
-    SECRET_KEY=config('SECRET_KEY','Secret')
+    # SECRET_KEY=config('SECRET_KEY','Secret')
+    SECRET_KEY='Secret' 
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(minutes = 300)
     JWT_REFRESH_TOKEN_EXPIRES = timedelta(minutes = 300)
-    JWT_SECRET_KEY=config('JWT_SECRET_KEY')
-    
+    # JWT_SECRET_KEY= config('JWT_SECRET_KEY')
+    JWT_SECRET_KEY='Secret' 
     
 class DevConfig(Config):
     DEBUG=True
