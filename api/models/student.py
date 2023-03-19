@@ -1,11 +1,6 @@
 from ..utils import db
 from enum import Enum
 
-class Courses(Enum):
-    THERMODYNAMICS = 'thermodynamics'
-    COMBUSTION = 'combustion'
-    TURBINES = 'turbines'
-    FLUID_MECHANICS = 'fluid_mechanics'
     
 class StudentStatus(Enum):
     ACTIVE = 'active'
@@ -13,15 +8,30 @@ class StudentStatus(Enum):
     INTERNING = 'interning'
 
 class Student(db.Model):
-    __tablename__='student'
+    __tablename__='students'
     id = db.Column(db.Integer(), primary_key=True)
-    course = db.Column(db.Enum(Courses), default = Courses.THERMODYNAMICS)
+    surname = db.Column(db.String(45), nullable=False)
+    firstname = db.Column(db.String(45), nullable=False)
+    email = db.Column(db.String(50), nullable=False,unique=True)
+  
     student_status = db.Column(db.Enum(StudentStatus), default=StudentStatus.ACTIVE)
-    teacher = db.Column(db.String(), nullable = False)
-    gpa = db.Column(db.Integer, nullable=False)
-    user = db.Column(db.Integer(), db.ForeignKey('users.id'))
     
     
-    def __repr__(self):
-        return f"<Student {self.username}>"
     
+    def __str__(self):
+        return f"<Student {self.id}>"
+
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+    @classmethod
+    def get_by_id(cls,id):
+        return cls.query.get_or_404(id)
+    
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()

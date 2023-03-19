@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_restx import Api
 from .student.views import student_namespace
+from .course.views import course_namespace
 from .auth.views import auth_namespace
 from .config.config import config_dict
 from .utils import db
 from .models.student import Student
+from .models.course import Course
 from .models.users import User
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
@@ -21,6 +23,7 @@ def create_app(config=config_dict['dev']):
     api=Api(app)
     
     api.add_namespace(student_namespace)
+    api.add_namespace(course_namespace)
     api.add_namespace(auth_namespace, path='/auth')
     
     db.init_app(app)
@@ -34,7 +37,8 @@ def create_app(config=config_dict['dev']):
             
             'db':db,
             'User': User,
-            'Student': Student
+            'Student': Student,
+            'Course': Course
         }
     
     return app

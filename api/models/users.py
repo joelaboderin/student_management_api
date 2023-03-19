@@ -10,7 +10,7 @@ class User(db.Model):
     password_hash=db.Column(db.Text(), nullable=False)
     is_staff=db.Column(db.Boolean(),default=False)
     is_active=db.Column(db.Boolean(),default=False)
-    student=db.relationship('Student', backref = 'yagayaga', lazy=True)
+  
     
     
     
@@ -20,4 +20,4 @@ class User(db.Model):
     
     def save(self):
         db.session.add(self)
-        db.session.commit
+        db.session.commit()
